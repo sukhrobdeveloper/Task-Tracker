@@ -2,24 +2,62 @@ package dev.misu.services;
 
 import dev.misu.entities.Task;
 
-import java.util.Random;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TaskServiceImpl implements TaskService {
 
-    private final Random random;
+    private final JsonService jsonService;
 
-    public TaskServiceImpl(Random random) {
-        this.random = random;
+    public TaskServiceImpl(JsonService jsonService) {
+        this.jsonService = jsonService;
     }
 
-    public String createTask() {
-        int id = generatingId();
+    public String createTask(String description) {
+        Task newTask = new Task(description);
+        jsonService.saveTask(newTask);
+        return newTask.toString();
+    }
+
+    public Task updateTask(int id, String description) {
+        Task task = jsonService.findTaskById(id);
+        task.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        task.setDescription(description);
+        jsonService.saveTask(task);
+        return task;
+    }
+
+    public boolean delete(int id) {
+        return true;
+    }
+
+    public String markInProgress(int id) {
+
         return "";
     }
 
-    private int generatingId() {
-        double id = random.nextDouble() * 100000;
-        return (int) id;
+    public String markDone(int id) {
+
+        return "";
+    }
+
+    public List<Task> listOfAllTasks() {
+
+        return new ArrayList<>();
+    }
+
+    public List<Task> listOfTasksStatusDone() {
+
+        return new ArrayList<>();
+    }
+
+    public List<Task> listOfTasksStatusTodo() {
+        return new ArrayList<>();
+    }
+
+    public List<Task> listOfTasksStatusInProgress() {
+        return new ArrayList<>();
     }
 
 }

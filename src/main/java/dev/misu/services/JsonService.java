@@ -5,12 +5,12 @@ import com.google.gson.reflect.TypeToken;
 import dev.misu.entities.Task;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
 
-import com.google.gson.reflect.TypeToken;
 import dev.misu.utils.AppConstant;
 
 public class JsonService {
@@ -31,11 +31,23 @@ public class JsonService {
                     .filter(task -> task.getId() == id)
                     .findFirst();
 
+            return optionalTask.orElse(null);
+
         } catch (IOException ex) {
             System.out.println("Error while reading a file: " + ex.getMessage());
         }
 
-
+        return null;
     }
+
+    public void saveTask(Task newTask) {
+        try(FileWriter fileWriter = new FileWriter(AppConstant.JSON_FILE_PATH)) {
+            gson.toJson(newTask, fileWriter);
+        } catch (IOException ex) {
+            System.out.println("Error while saving tasks: " + ex.getMessage());
+        }
+    }
+
+
 
 }
