@@ -8,11 +8,7 @@ import java.util.List;
 
 public class TaskServiceImpl implements TaskService {
 
-    private final JsonService jsonService;
-
-    public TaskServiceImpl(JsonService jsonService) {
-        this.jsonService = jsonService;
-    }
+    private final JsonService jsonService = new JsonService();
 
     public String createTask(String description) {
         Task newTask = new Task(description);

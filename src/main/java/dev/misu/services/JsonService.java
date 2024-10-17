@@ -15,11 +15,7 @@ import dev.misu.utils.AppConstant;
 
 public class JsonService {
 
-    private final Gson gson;
-
-    public JsonService(Gson gson) {
-        this.gson = gson;
-    }
+    private final Gson gson = new Gson();
 
     public Task findTaskById(Integer id) {
         Type taskTypeList = new TypeToken<List<Task>>(){}.getType();
